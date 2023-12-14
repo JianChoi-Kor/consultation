@@ -9,6 +9,7 @@ import com.sonssoft.consultation.enums.EmployeeType;
 import com.sonssoft.consultation.exception.DataNotFoundException;
 import com.sonssoft.consultation.repository.ConsultationInfoRepository;
 import com.sonssoft.consultation.repository.EmployeeRepository;
+import com.sonssoft.consultation.repository.FeedbackRepository;
 import com.sonssoft.consultation.repository.StudentRepository;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationInfoRepository consultationInfoRepository;
     private final EmployeeRepository employeeRepository;
     private final StudentRepository studentRepository;
+    private final FeedbackRepository feedbackRepository;
 
     @Transactional
     @Override
@@ -44,6 +46,16 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         // save
         consultationInfoRepository.save(consultationInfo);
+
+        return ConsultationDetail.of(consultationInfo);
+    }
+
+    @Transactional
+    @Override
+    public ConsultationDetail getConsultation(Long consultationId) {
+        // 해당하는 상담 내역이 존재하는지 여부 확인
+        ConsultationInfo consultationInfo = consultationInfoRepository.findOne(consultationId)
+                .orElseThrow(() -> new DataNotFoundException("해당하는 상담 정보가 존재하지 않습니다."));
 
         return ConsultationDetail.of(consultationInfo);
     }

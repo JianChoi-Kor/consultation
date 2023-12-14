@@ -30,4 +30,7 @@ public class ConsultationInfo extends CreatedAndUpdatedAt {
 
     @Column(name = "content", nullable = true)
     private String content;
+
+    @OneToOne(mappedBy = "consultationInfo")
+    private Feedback feedback;
 }

@@ -5,4 +5,5 @@ import com.sonssoft.consultation.dto.ConsultationResponseDto.ConsultationDetail;
 
 public interface ConsultationService {
     ConsultationDetail registerConsultation(RegisterConsultation param);
+    ConsultationDetail getConsultation(Long consultationId);
 }

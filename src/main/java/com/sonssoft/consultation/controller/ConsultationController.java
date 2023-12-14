@@ -48,9 +48,10 @@ public class ConsultationController {
         return apiResponse.success();
     }
 
-    @GetMapping(value = "/{consultationId}")
-    public ResponseEntity<?> getConsultation() {
-        return apiResponse.success();
+    @GetMapping(value = "/{consultationId:[0-9]*}")
+    public ResponseEntity<?> getConsultation(@PathVariable Long consultationId) {
+
+        return apiResponse.success(consultationService.getConsultation(consultationId));
     }
 
     @GetMapping(value = "/{consultationId}/read")
