@@ -6,6 +6,7 @@ import com.sonssoft.consultation.dto.FeedbackResponseDto.FeedbackDetail;
 import com.sonssoft.consultation.entity.ConsultationInfo;
 import com.sonssoft.consultation.entity.Employee;
 import com.sonssoft.consultation.entity.Feedback;
+import com.sonssoft.consultation.enums.EmployeeType;
 import com.sonssoft.consultation.exception.DataNotFoundException;
 import com.sonssoft.consultation.repository.ConsultationInfoRepository;
 import com.sonssoft.consultation.repository.EmployeeRepository;
@@ -33,7 +34,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .orElseThrow(() -> new DataNotFoundException("해당하는 상담 정보가 존재하지 않습니다."));
 
         // 해당하는 담당자가 존재하는지 여부 확인
-        Employee employee = employeeRepository.findById(param.getEmployeeId())
+        Employee manager = employeeRepository.findByIdAndType(param.getEmployeeId(), EmployeeType.MANAGER)
                 .orElseThrow(() -> new DataNotFoundException("해당하는 담당자가 존재하지 않습니다."));
 
         // 읽음 처리 또는 피드백이 등록되어 있는지 확인
@@ -43,14 +44,14 @@ public class FeedbackServiceImpl implements FeedbackService {
             if (feedback.getFeedbackEmployee() != null) {
                 throw new IllegalStateException("기존에 등록된 피드백이 존재합니다.");
             } else {
-                feedback.registerFeedback(employee, param.getContent(), LocalDateTime.now());
+                feedback.registerFeedback(manager, param.getContent(), LocalDateTime.now());
             }
         } else {
             feedback = Feedback.builder()
                     .consultationInfo(consultationInfo)
-                    .readEmployee(employee)
+                    .readEmployee(manager)
                     .content(param.getContent())
-                    .feedbackEmployee(employee)
+                    .feedbackEmployee(manager)
                     .feedbackAt(LocalDateTime.now())
                     .build();
         }
