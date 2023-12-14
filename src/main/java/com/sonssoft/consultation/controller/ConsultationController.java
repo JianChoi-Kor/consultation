@@ -1,5 +1,6 @@
 package com.sonssoft.consultation.controller;
 
+import com.sonssoft.consultation.dto.ConsultationRequestDto.ReadConsultation;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
 import com.sonssoft.consultation.dto.FeedbackRequestDto.RegisterOrModifyFeedback;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
@@ -54,9 +55,16 @@ public class ConsultationController {
         return apiResponse.success(consultationService.getConsultation(consultationId));
     }
 
-    @GetMapping(value = "/{consultationId}/read")
-    public ResponseEntity<?> readConsultation() {
-        return apiResponse.success();
+    @GetMapping(value = "/{consultationId:[0-9]*}/read")
+    public ResponseEntity<?> readConsultation(@PathVariable Long consultationId,
+                                              @RequestBody @Validated ReadConsultation param,
+                                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return apiResponse.fail(bindingResult);
+        }
+        param.setConsultationId(consultationId);
+
+        return apiResponse.success(consultationService.readConsultation(param));
     }
 
     @PutMapping(value = "/{consultationId}/feedback")

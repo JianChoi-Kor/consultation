@@ -2,10 +2,7 @@ package com.sonssoft.consultation.entity;
 
 import com.sonssoft.consultation.entity.base.CreatedAndUpdatedAt;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
@@ -33,4 +30,8 @@ public class ConsultationInfo extends CreatedAndUpdatedAt {
 
     @OneToOne(mappedBy = "consultationInfo")
     private Feedback feedback;
+
+    public void registerFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
 }

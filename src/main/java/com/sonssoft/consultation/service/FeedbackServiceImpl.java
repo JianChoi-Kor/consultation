@@ -56,8 +56,11 @@ public class FeedbackServiceImpl implements FeedbackService {
                     .build();
         }
 
+        // save
         feedbackRepository.save(feedback);
 
-        return ConsultationDetail.of(consultationInfo, FeedbackDetail.of(feedback));
+        consultationInfo.registerFeedback(feedback);
+
+        return ConsultationDetail.of(consultationInfo);
     }
 }

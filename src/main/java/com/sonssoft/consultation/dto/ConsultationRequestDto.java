@@ -16,4 +16,13 @@ public class ConsultationRequestDto {
         private Long studentId;
         private String content;
     }
+
+    @Getter
+    @Setter
+    public static class ReadConsultation {
+
+        private Long consultationId;
+        @NotNull(message = "{manager.employeeId.notnull}")
+        private Long employeeId;
+    }
 }
