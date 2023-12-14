@@ -2,9 +2,13 @@ package com.sonssoft.consultation.entity;
 
 import com.sonssoft.consultation.entity.base.CreatedAndUpdatedAt;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "consultation_info")
