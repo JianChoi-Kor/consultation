@@ -5,10 +5,10 @@ import com.sonssoft.consultation.dto.ConsultationResponseDto.ConsultationDetail;
 import com.sonssoft.consultation.entity.ConsultationInfo;
 import com.sonssoft.consultation.entity.Employee;
 import com.sonssoft.consultation.entity.Student;
+import com.sonssoft.consultation.enums.EmployeeType;
 import com.sonssoft.consultation.exception.DataNotFoundException;
 import com.sonssoft.consultation.repository.ConsultationInfoRepository;
 import com.sonssoft.consultation.repository.EmployeeRepository;
-import com.sonssoft.consultation.repository.FeedbackRepository;
 import com.sonssoft.consultation.repository.StudentRepository;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,13 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     private final ConsultationInfoRepository consultationInfoRepository;
     private final EmployeeRepository employeeRepository;
-    private final FeedbackRepository feedbackRepository;
     private final StudentRepository studentRepository;
 
     @Transactional
     @Override
     public ConsultationDetail registerConsultation(RegisterConsultation param) {
         // 해당하는 상담사가 존재하는지 여부 확인
-        Employee employee = employeeRepository.findById(param.getEmployeeId())
+        Employee consultant = employeeRepository.findByIdAndType(param.getEmployeeId(), EmployeeType.CONSULTANT)
                 .orElseThrow(() -> new DataNotFoundException("해당하는 상담사가 존재하지 않습니다."));
 
         // 해당하는 학생이 존재하는지 여부 확인
@@ -39,7 +38,7 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         ConsultationInfo consultationInfo = ConsultationInfo.builder()
                 .student(student)
-                .employee(employee)
+                .employee(consultant)
                 .content(param.getContent())
                 .build();
 
