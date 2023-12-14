@@ -10,7 +10,7 @@ public class ConsultationRequestDto {
     @Setter
     public static class RegisterConsultation {
 
-        @NotNull(message = "{employeeId.notnull}")
+        @NotNull(message = "{consultant.employeeId.notnull}")
         private Long employeeId;
         @NotNull(message = "{studentId.notnull}")
         private Long studentId;
