@@ -12,8 +12,11 @@ import com.sonssoft.consultation.repository.FeedbackRepository;
 import com.sonssoft.consultation.repository.StudentRepository;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConsultationServiceImpl implements ConsultationService {
@@ -23,6 +26,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final FeedbackRepository feedbackRepository;
     private final StudentRepository studentRepository;
 
+    @Transactional
     @Override
     public ConsultationDetail registerConsultation(RegisterConsultation param) {
         // 해당하는 상담사가 존재하는지 여부 확인
