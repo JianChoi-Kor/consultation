@@ -1,8 +1,8 @@
 package com.sonssoft.consultation.service.interfaces;
 
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
-import com.sonssoft.consultation.dto.ConsultationResponseDto.RegisteredConsultation;
+import com.sonssoft.consultation.dto.ConsultationResponseDto.ConsultationDetail;
 
 public interface ConsultationService {
-    RegisteredConsultation registerConsultation(RegisterConsultation param);
+    ConsultationDetail registerConsultation(RegisterConsultation param);
 }

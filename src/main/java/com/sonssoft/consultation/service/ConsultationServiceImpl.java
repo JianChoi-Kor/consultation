@@ -1,7 +1,7 @@
 package com.sonssoft.consultation.service;
 
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
-import com.sonssoft.consultation.dto.ConsultationResponseDto.RegisteredConsultation;
+import com.sonssoft.consultation.dto.ConsultationResponseDto.ConsultationDetail;
 import com.sonssoft.consultation.entity.ConsultationInfo;
 import com.sonssoft.consultation.entity.Employee;
 import com.sonssoft.consultation.entity.Student;
@@ -24,7 +24,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final StudentRepository studentRepository;
 
     @Override
-    public RegisteredConsultation registerConsultation(RegisterConsultation param) {
+    public ConsultationDetail registerConsultation(RegisterConsultation param) {
         // 해당하는 상담사가 존재하는지 여부 확인
         Employee employee = employeeRepository.findById(param.getEmployeeId())
                 .orElseThrow(() -> new DataNotFoundException("해당하는 상담사가 존재하지 않습니다."));
@@ -42,6 +42,6 @@ public class ConsultationServiceImpl implements ConsultationService {
         // save
         consultationInfoRepository.save(consultationInfo);
 
-        return RegisteredConsultation.of(consultationInfo);
+        return ConsultationDetail.of(consultationInfo);
     }
 }
