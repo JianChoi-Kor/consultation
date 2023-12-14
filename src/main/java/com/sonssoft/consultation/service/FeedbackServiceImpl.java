@@ -30,7 +30,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public ConsultationDetail registerFeedback(RegisterOrModifyFeedback param) {
         // 해당하는 상담 내역이 존재하는지 여부 확인
-        ConsultationInfo consultationInfo = consultationInfoRepository.findById(param.getConsultationId())
+        ConsultationInfo consultationInfo = consultationInfoRepository.findOne(param.getConsultationId())
                 .orElseThrow(() -> new DataNotFoundException("해당하는 상담 정보가 존재하지 않습니다."));
 
         // 해당하는 담당자가 존재하는지 여부 확인
