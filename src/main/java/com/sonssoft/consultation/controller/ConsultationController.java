@@ -1,7 +1,9 @@
 package com.sonssoft.consultation.controller;
 
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
+import com.sonssoft.consultation.dto.FeedbackRequestDto.RegisterOrModifyFeedback;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
+import com.sonssoft.consultation.service.interfaces.FeedbackService;
 import com.sonssoft.consultation.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ public class ConsultationController {
     private final ApiResponse apiResponse;
 
     private final ConsultationService consultationService;
+    private final FeedbackService feedbackService;
 
     @PostMapping(value = "")
     public ResponseEntity<?> registerConsultation(@RequestBody @Validated RegisterConsultation param,
@@ -28,9 +31,16 @@ public class ConsultationController {
         return apiResponse.success(consultationService.registerConsultation(param));
     }
 
-    @PostMapping(value = "/{consultationId}/feedback")
-    public ResponseEntity<?> registerFeedback() {
-        return apiResponse.success();
+    @PostMapping(value = "/{consultationId:[0-9]*}/feedback")
+    public ResponseEntity<?> registerFeedback(@PathVariable Long consultationId,
+                                              @RequestBody @Validated RegisterOrModifyFeedback param,
+                                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return apiResponse.fail(bindingResult);
+        }
+        param.setConsultationId(consultationId);
+
+        return apiResponse.success(feedbackService.registerFeedback(param));
     }
 
     @GetMapping(value = "")

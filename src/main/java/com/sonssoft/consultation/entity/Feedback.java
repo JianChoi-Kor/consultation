@@ -2,11 +2,15 @@ package com.sonssoft.consultation.entity;
 
 import com.sonssoft.consultation.entity.base.CreatedAndUpdatedAt;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "feedback")
@@ -35,4 +39,10 @@ public class Feedback extends CreatedAndUpdatedAt {
 
     @Column(name = "feedback_at", nullable = true)
     private LocalDateTime feedbackAt;
+
+    public void registerFeedback(Employee feedbackEmployee, String content, LocalDateTime feedbackAt) {
+        this.feedbackEmployee = feedbackEmployee;
+        this.content = content;
+        this.feedbackAt = feedbackAt;
+    }
 }
