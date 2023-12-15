@@ -1,5 +1,6 @@
 package com.sonssoft.consultation.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ApiResponse {
+public class CustomApiResponse {
 
     private static final String STATUS_SUCCESS = "success";
     private static final String STATUS_FAIL = "fail";
@@ -74,10 +75,14 @@ public class ApiResponse {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+    @Schema(description = "성공 응답 Body")
     public static class SucceededBody<T> {
 
+        @Schema(description = "응답 결과", example = "success")
         private String status;
+        @Schema(description = "응답 메시지")
         private String message;
+        @Schema(description = "응답 데이터")
         private T data;
     }
 

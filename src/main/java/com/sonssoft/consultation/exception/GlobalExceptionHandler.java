@@ -1,7 +1,7 @@
 package com.sonssoft.consultation.exception;
 
-import com.sonssoft.consultation.utils.ApiResponse;
-import com.sonssoft.consultation.utils.ApiResponse.FieldError;
+import com.sonssoft.consultation.utils.CustomApiResponse;
+import com.sonssoft.consultation.utils.CustomApiResponse.FieldError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    private final ApiResponse apiResponse;
+    private final CustomApiResponse customApiResponse;
 
     /**
      * DataNotFoundException 예외 처리
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<?> handleDataNotFoundException(DataNotFoundException exception) {
-        return apiResponse.fail(exception.getMessage());
+        return customApiResponse.fail(exception.getMessage());
     }
 
     /**
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> handleBusinessException(IllegalStateException exception) {
-        return apiResponse.fail(exception.getMessage());
+        return customApiResponse.fail(exception.getMessage());
     }
 
     /**
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<?> handleMissingServletRequestParameterException(MissingServletRequestParameterException exception) {
         FieldError fieldError = new FieldError(exception.getParameterName(), "요청 값을 입력해 주세요.");
-        return apiResponse.fail(null, Collections.singletonList(fieldError));
+        return customApiResponse.fail(null, Collections.singletonList(fieldError));
     }
 
     /**
@@ -61,6 +61,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception exception) {
         log.error(exception.getMessage());
-        return apiResponse.error("요청에 실패했습니다.");
+        return customApiResponse.error("요청에 실패했습니다.");
     }
 }
