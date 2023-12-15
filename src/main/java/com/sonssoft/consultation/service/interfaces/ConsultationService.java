@@ -1,5 +1,6 @@
 package com.sonssoft.consultation.service.interfaces;
 
+import com.querydsl.core.QueryResults;
 import com.sonssoft.consultation.dto.ConsultationRequestDto;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.ReadConsultation;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
@@ -12,5 +13,5 @@ public interface ConsultationService {
     ConsultationDetail registerConsultation(RegisterConsultation param);
     ConsultationDetail getConsultation(Long consultationId);
     ConsultationDetail readConsultation(ReadConsultation param);
-    List<ConsultationDetail> getConsultationList(ConsultationRequestDto.SearchConsultation param);
+    QueryResults<ConsultationDetail> getConsultationList(ConsultationRequestDto.SearchConsultation param);
 }

@@ -1,5 +1,6 @@
 package com.sonssoft.consultation.service;
 
+import com.querydsl.core.QueryResults;
 import com.sonssoft.consultation.dto.ConsultationRequestDto;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
 import com.sonssoft.consultation.dto.ConsultationResponseDto.ConsultationDetail;
@@ -95,13 +96,15 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Transactional
     @Override
-    public List<ConsultationDetail> getConsultationList(ConsultationRequestDto.SearchConsultation param) {
+    public QueryResults<ConsultationDetail> getConsultationList(ConsultationRequestDto.SearchConsultation param) {
 
-        List<ConsultationInfo> consultationInfoList =
-                consultationInfoRepository.getConsultationList(param.getPredicates(), param.getSorts());
+        QueryResults<ConsultationInfo> consultationInfoList =
+                consultationInfoRepository.getConsultationList(param, param.getPredicates(), param.getSorts());
 
-        return consultationInfoList
+        List<ConsultationDetail> result = consultationInfoList.getResults()
                 .stream()
                 .map(ConsultationDetail::of).toList();
+
+        return new QueryResults<>(result, consultationInfoList.getLimit(), consultationInfoList.getOffset(), consultationInfoList.getTotal());
     }
 }

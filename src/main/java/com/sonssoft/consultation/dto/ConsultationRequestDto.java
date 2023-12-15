@@ -5,6 +5,7 @@ import static com.sonssoft.consultation.entity.QFeedback.feedback;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+import com.sonssoft.consultation.dto.interfaces.Paging;
 import com.sonssoft.consultation.dto.interfaces.Predicatable;
 import com.sonssoft.consultation.dto.interfaces.Sort;
 import jakarta.validation.constraints.NotNull;
@@ -38,7 +39,7 @@ public class ConsultationRequestDto {
 
     @Getter
     @Setter
-    public static class SearchConsultation implements Predicatable, Sort {
+    public static class SearchConsultation implements Paging, Predicatable, Sort {
 
         private Long consultantEmployeeId;
         private Long readManagerEmployeeId;
@@ -46,6 +47,8 @@ public class ConsultationRequestDto {
         private Boolean readYn;
         private Boolean feedbackYn;
         private Boolean recentYn;
+        private Long page;
+        private Long limit;
 
         public List<Predicate> getPredicates() {
             List<Predicate> where = new ArrayList<>();
@@ -93,6 +96,19 @@ public class ConsultationRequestDto {
             }
 
             return orderBy;
+        }
+
+        @Override
+        public long getOffset() {
+            long pageToGo = page != null ? page : 1;
+            long limitToGo = limit != null ? limit : 10;
+
+            return (pageToGo - 1) * limitToGo;
+        }
+
+        @Override
+        public long getLimit() {
+            return limit != null ? limit : 10;
         }
     }
 }
