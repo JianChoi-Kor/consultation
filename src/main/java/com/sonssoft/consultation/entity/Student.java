@@ -3,9 +3,10 @@ package com.sonssoft.consultation.entity;
 import com.sonssoft.consultation.enums.StudentState;
 import com.sonssoft.consultation.enums.converter.StudentStateConverter;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "student")

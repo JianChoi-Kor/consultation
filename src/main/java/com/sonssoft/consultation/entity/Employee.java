@@ -5,9 +5,10 @@ import com.sonssoft.consultation.enums.EmployeeType;
 import com.sonssoft.consultation.enums.converter.EmployeeStateConverter;
 import com.sonssoft.consultation.enums.converter.EmployeeTypeConverter;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "employee")
