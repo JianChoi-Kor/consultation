@@ -88,7 +88,11 @@ public class ConsultationController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomApiResponse.ErroredBody.class))})
     })
     public ResponseEntity<?> getConsultationList(
-            SearchConsultation param) {
+            @Validated SearchConsultation param,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return apiResponse.fail(bindingResult);
+        }
 
         return apiResponse.success(consultationService.getConsultationList(param));
     }

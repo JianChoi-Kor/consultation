@@ -11,6 +11,7 @@ import com.sonssoft.consultation.dto.interfaces.Sort;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,7 +64,11 @@ public class ConsultationRequestDto {
         private Boolean feedbackYn;
         @Schema(description = "최신순 정렬 여부에 대한 필터", example = "true")
         private Boolean recentYn;
+        @Positive(message = "{page.positive}")
+        @Schema(example = "1")
         private Long page;
+        @Positive(message = "{limit.positive}")
+        @Schema(example = "10")
         private Long limit;
 
         @Hidden
@@ -125,7 +130,6 @@ public class ConsultationRequestDto {
             return (pageToGo - 1) * limitToGo;
         }
 
-        @Hidden
         @Override
         public long getLimit() {
             return limit != null ? limit : 10;
