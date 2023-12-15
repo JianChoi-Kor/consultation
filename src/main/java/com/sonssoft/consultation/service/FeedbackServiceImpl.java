@@ -38,7 +38,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .orElseThrow(() -> new DataNotFoundException("해당하는 담당자가 존재하지 않습니다."));
 
         // 읽음 처리 또는 피드백이 등록되어 있는지 확인
-        Feedback feedback = feedbackRepository.findByConsultationInfo(consultationInfo);
+        Feedback feedback = consultationInfo.getFeedback();
         if (feedback != null) {
             // 피드백이 등록되어 있는 경우
             if (feedback.getFeedbackEmployee() != null) {
