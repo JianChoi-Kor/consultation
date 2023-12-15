@@ -35,9 +35,9 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Transactional
     @Override
     public ConsultationDetail registerConsultation(RegisterConsultation param) {
-        // 해당하는 상담사가 존재하는지 여부 확인
+        // 해당하는 상담원가 존재하는지 여부 확인
         Employee consultant = employeeRepository.findByIdAndType(param.getEmployeeId(), EmployeeType.CONSULTANT)
-                .orElseThrow(() -> new DataNotFoundException("해당하는 상담사가 존재하지 않습니다."));
+                .orElseThrow(() -> new DataNotFoundException("해당하는 상담원가 존재하지 않습니다."));
 
         // 해당하는 학생이 존재하는지 여부 확인
         Student student = studentRepository.findById(param.getStudentId())

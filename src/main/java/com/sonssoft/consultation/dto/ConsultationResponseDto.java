@@ -20,9 +20,9 @@ public class ConsultationResponseDto {
 
         @Schema(description = "상담 고유값", example = "1")
         private Long consultationInfoId;
-        @Schema(description = "상담사 고유값", example = "1")
+        @Schema(description = "상담원 고유값", example = "1")
         private Long employeeId;
-        @Schema(description = "상담사 이름", example = "김상담")
+        @Schema(description = "상담원 이름", example = "김상담")
         private String employeeName;
         @Schema(description = "학생 고유값", example = "1")
         private Long studentId;

@@ -25,7 +25,7 @@ public class ConsultationRequestDto {
     public static class RegisterConsultation {
 
         @NotNull(message = "{consultant.employeeId.notnull}")
-        @Schema(description = "상담사 고유값", example = "1")
+        @Schema(description = "상담원 고유값", example = "1")
         private Long employeeId;
         @NotNull(message = "{studentId.notnull}")
         @Schema(description = "학생 고유값", example = "1")
@@ -51,7 +51,7 @@ public class ConsultationRequestDto {
     @Schema(description = "상담 내역 조회 Request")
     public static class SearchConsultation implements Paging, Predicatable, Sort {
 
-        @Schema(description = "상담사 고유값", example = "1")
+        @Schema(description = "상담원 고유값", example = "1")
         private Long consultantEmployeeId;
         @Schema(description = "읽음 처리 담당자 고유값", example = "1")
         private Long readManagerEmployeeId;
@@ -69,7 +69,7 @@ public class ConsultationRequestDto {
         @Hidden
         public List<Predicate> getPredicates() {
             List<Predicate> where = new ArrayList<>();
-            // 상담사 조회 조건이 있을 경우
+            // 상담원 조회 조건이 있을 경우
             if (consultantEmployeeId != null) {
                 where.add(consultationInfo.employee.id.eq(consultantEmployeeId));
             }
