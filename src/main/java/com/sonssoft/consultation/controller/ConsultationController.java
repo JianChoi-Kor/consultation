@@ -2,7 +2,8 @@ package com.sonssoft.consultation.controller;
 
 import com.sonssoft.consultation.dto.ConsultationRequestDto.ReadConsultation;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
-import com.sonssoft.consultation.dto.FeedbackRequestDto.RegisterOrModifyFeedback;
+import com.sonssoft.consultation.dto.FeedbackRequestDto.ModifyFeedback;
+import com.sonssoft.consultation.dto.FeedbackRequestDto.RegisterFeedback;
 import com.sonssoft.consultation.service.interfaces.ConsultationService;
 import com.sonssoft.consultation.service.interfaces.FeedbackService;
 import com.sonssoft.consultation.utils.ApiResponse;
@@ -34,7 +35,7 @@ public class ConsultationController {
 
     @PostMapping(value = "/{consultationId:[0-9]*}/feedback")
     public ResponseEntity<?> registerFeedback(@PathVariable Long consultationId,
-                                              @RequestBody @Validated RegisterOrModifyFeedback param,
+                                              @RequestBody @Validated RegisterFeedback param,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return apiResponse.fail(bindingResult);
@@ -67,8 +68,15 @@ public class ConsultationController {
         return apiResponse.success(consultationService.readConsultation(param));
     }
 
-    @PutMapping(value = "/{consultationId}/feedback")
-    public ResponseEntity<?> modifyConsultation() {
-        return apiResponse.success();
+    @PutMapping(value = "/{consultationId:[0-9]*}/feedback")
+    public ResponseEntity<?> modifyConsultation(@PathVariable Long consultationId,
+                                                @RequestBody @Validated ModifyFeedback param,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return apiResponse.fail(bindingResult);
+        }
+        param.setConsultationId(consultationId);
+
+        return apiResponse.success(feedbackService.modifyConsultation(param));
     }
 }

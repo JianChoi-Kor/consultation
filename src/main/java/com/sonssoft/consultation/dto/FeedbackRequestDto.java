@@ -8,7 +8,17 @@ public class FeedbackRequestDto {
 
     @Getter
     @Setter
-    public static class RegisterOrModifyFeedback {
+    public static class RegisterFeedback {
+
+        private Long consultationId;
+        @NotNull(message = "{manager.employeeId.notnull}")
+        private Long employeeId;
+        private String content;
+    }
+
+    @Getter
+    @Setter
+    public static class ModifyFeedback {
 
         private Long consultationId;
         @NotNull(message = "{manager.employeeId.notnull}")
