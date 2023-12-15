@@ -1,5 +1,6 @@
 package com.sonssoft.consultation.controller;
 
+import com.sonssoft.consultation.dto.ConsultationRequestDto.SearchConsultation;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.ReadConsultation;
 import com.sonssoft.consultation.dto.ConsultationRequestDto.RegisterConsultation;
 import com.sonssoft.consultation.dto.FeedbackRequestDto.ModifyFeedback;
@@ -46,8 +47,9 @@ public class ConsultationController {
     }
 
     @GetMapping(value = "")
-    public ResponseEntity<?> getConsultationList() {
-        return apiResponse.success();
+    public ResponseEntity<?> getConsultationList(SearchConsultation param) {
+
+        return apiResponse.success(consultationService.getConsultationList(param));
     }
 
     @GetMapping(value = "/{consultationId:[0-9]*}")

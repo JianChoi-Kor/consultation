@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -89,5 +91,17 @@ public class ConsultationServiceImpl implements ConsultationService {
         consultationInfo.registerFeedback(feedback);
 
         return ConsultationDetail.of(consultationInfo);
+    }
+
+    @Transactional
+    @Override
+    public List<ConsultationDetail> getConsultationList(ConsultationRequestDto.SearchConsultation param) {
+
+        List<ConsultationInfo> consultationInfoList =
+                consultationInfoRepository.getConsultationList(param.getPredicates(), param.getSorts());
+
+        return consultationInfoList
+                .stream()
+                .map(ConsultationDetail::of).toList();
     }
 }
