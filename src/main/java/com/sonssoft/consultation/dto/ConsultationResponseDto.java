@@ -16,6 +16,7 @@ public class ConsultationResponseDto {
     @Getter
     public static class ConsultationDetail {
 
+        private Long consultationInfoId;
         private Long employeeId;
         private String employeeName;
         private Long studentId;
@@ -30,6 +31,7 @@ public class ConsultationResponseDto {
             Feedback feedback = consultationInfo.getFeedback();
             if (feedback != null) {
                 return ConsultationDetail.builder()
+                        .consultationInfoId(consultationInfo.getId())
                         .employeeId(employee.getId())
                         .employeeName(employee.getName())
                         .studentId(student.getId())
@@ -39,6 +41,7 @@ public class ConsultationResponseDto {
                         .build();
             } else {
                 return ConsultationDetail.builder()
+                        .consultationInfoId(consultationInfo.getId())
                         .employeeId(employee.getId())
                         .employeeName(employee.getName())
                         .studentId(student.getId())
